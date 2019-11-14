@@ -1,0 +1,74 @@
+body {
+  min-width: 320px;
+}
+
+.input-wrapper {
+  min-width: 260px;
+  max-width: 750px;
+  padding: 5px 0px;
+    
+}
+
+input[type=number] {
+  max-width: 70px;
+}
+
+/*
+.labels {
+  
+}*/
+
+
+.input {
+  position: relative;
+  right: 0px;
+  
+  
+}
+
+#title-header {
+  max-width: 900px;
+  margin: 0 20% 0 20%;
+  text-align: center;
+}
+
+#form-wrapper 
+{
+  max-width: 900px;
+  margin: 0 20% 0 20%;
+}
+
+#button-wrapper {
+  text-align: center;
+}
+  
+#tablewrapper {
+  
+  visibility: hidden;
+  max-width: 900px;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.table {
+  /*YET TO DO!*/
+}
+/*#age-wrapper {
+    
+}
+  
+#credit-wrapper {
+    
+}
+  
+#invest-wrapper {
+    
+}
+  
+#div-warpper {
+    
+}
+  
+#inflation-wrapper {
+    
+}*/

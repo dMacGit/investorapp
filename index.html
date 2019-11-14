@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title >The Investment Calculator</title>
+    <link rel="stylesheet" href="./static/styles/style.css" >
+    
+  </head>
+  <body>
+      <header id="title-header">
+        <h1>Welcome to the Investment Calculator</h1>
+        <p><i>Alter the below propertis to calculate your investment!</i></p>
+      </header>
+    
+      <div id="form-wrapper">
+        <form action="" method="post">
+          <div class="input-wrapper">
+            <label class="labels" for="startAge">Start Age:</label>
+            <input class="input" type="number" id="startAge" name="startAge" value="21">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="endAge">End Age:</label>
+            <input class="input" type="number" id="endAge" name="endAge" value="65">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="startAmount">Start Amount $:</label>
+            <input class="input" type="number" id="startAmount" name="startAmount" value="5000">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="yeild">Investment Yeild Rate (%):</label>
+            <input class="input" type="number" id="yeild" name="yeild" value="8.00" step="0.05">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="dividendRate">Dividend Yeild Rate:</label>
+            <input class="input" type="number" id="dividendRate" name="dividendRate" value="3.00">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="divReinvest">Reinvest Dividend?:</label>
+            <input class="input" type="checkbox" id="divReinvest" name="divReinvest">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="startPaymentAmount">Monthly Payment Credit:</label>
+            <input class="input" type="number" id="startPaymentAmount" name="startPaymentAmount" value="200">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="monthlyPaymentMax">Monthly Payment Credit Max:</label>
+            <input class="input" type="number" id="monthlyPaymentMax" name="monthlyPaymentMax" value="1000">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="monthlyPaymentIncreasePa">Monthly Payment Increase (PA):</label>
+            <input class="input" type="number" id="monthlyPaymentIncreasePa" name="monthlyPaymentIncreasePa" value="0.00">
+          </div>
+          <div class="input-wrapper">
+            <label class="labels" for="inflationRate">Inflation Rate:</label>
+            <input class="input" type="number" id="inflationRate" name="inflationRate" value="3.00">
+          </div>
+          <div id="button-wrapper">
+            <input id="calculate" type="button" value="Calculate" />
+            <input id="reset" type="button" value="Reset" />
+            <input id="csvfile" type="button" value="CSV" />
+          </div>
+          <div id="tablewrapper">
+            <table class="table table-sm">
+              <thread>
+                <tr>
+                  <th scope="col">Year #</th>
+                  <th scope="col">Principle</th>
+                  <th scope="col">Monthly Credit</th>
+                  <th scope="col">Total Years Credit</th>
+                  <th scope="col">Before Yeild</th>
+                  <th scope="col">After Yeild</th>
+                  <th scope="col">Div Return</th>
+                  <th scope="col">After Div Reinvested</th>
+                </tr>
+              </thread>
+              <tbody id="tbody">
+              </tbody>                
+            </table>
+          </div>
+        </form>
+      </div>
+      
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="static/scripts/calculate.js"></script>
+      <script src="static/scripts/spreadsheet.js"></script>
+      <script src="static/scripts/csv.js"></script>
+      <script type="text/javascript">
+        
+        
+  
+        function init()
+        {
+
+          
+
+          var calcBtn = document.getElementById("calculate");
+          calcBtn.addEventListener("click", function() 
+          { 
+            
+            if (document.getElementById("tablewrapper").style.visibility == "visible")
+            {
+              //Just remove and re-add.
+              resetTable();
+            }
+            document.getElementById("tablewrapper").style.visibility = "visible";
+            start_age = document.getElementById("startAge").value;
+            end_age = document.getElementById("endAge").value;
+            start_amount = document.getElementById("startAmount").value;
+            investment_yeild = document.getElementById("yeild").value;
+            monthly_payment = document.getElementById("startPaymentAmount").value;
+            monthly_payment_increase = document.getElementById("monthlyPaymentIncreasePa").value;
+            console.log("monthly_payment_increase: ",+monthly_payment_increase);
+            console.log("monthlyPaymentMax: ",+document.getElementById("monthlyPaymentMax"));
+            monthly_payment_max_cap = document.getElementById("monthlyPaymentMax").value;
+            inflation_rate = document.getElementById("inflationRate").value;
+            dividend_yeild = document.getElementById("dividendRate").value;
+            reinvest_dividend = document.getElementById("divReinvest").checked;
+            period = duration(start_age,end_age);
+            console.log(start_age.value+","+end_age.value);
+            first_years_total_monthly_payments = calculateYearsCreditPayments(monthly_payment,monthly_payment_max_cap,0.00);
+            second_years_total_monthly_payments = eval(first_years_total_monthly_payments)*eval(1+monthly_payment_increase/100.00);
+            total_Credit_Payments = 0.00;
+            current_mo_payment = monthly_payment;
+            current_investment = start_amount;
+            investmentAfterYield = 0;
+            divReturned = 0;
+            investmentAfterDiv = 0;
+            var currentYearsPrinciple = 0;
+            console.log("=============================== New run ===================");
+
+            var rowsArray = [];
+            for (year = 0; year<period; year++)
+            {
+              currentYearsPrinciple = current_investment;
+              if (year == 0)
+              {
+                console.log("[ "+year+" ] Before mo payment calc: "+current_mo_payment+"{ "+monthly_payment_increase+" }");
+                current_mo_payment = calculate_monthly_payment(current_mo_payment,monthly_payment_max_cap,undefined);
+                console.log("After mo payment calc: "+current_mo_payment);
+              }
+              else {
+                console.log("[ "+year+" ] Before mo payment calc: "+current_mo_payment+"{ "+monthly_payment_increase+" }");
+                
+                current_mo_payment = calculate_monthly_payment(current_mo_payment,monthly_payment_max_cap,monthly_payment_increase);
+                
+                console.log("After mo payment calc: "+current_mo_payment);
+              }
+              yearsPayments = calculateYearsCreditPayments(current_mo_payment,monthly_payment_max_cap,undefined)
+              total_Credit_Payments += yearsPayments;
+              console.log("[ "+year+" ] Before Inv Yeild added: "+current_investment+" year in payments credit: "+yearsPayments);
+              current_investment = calculate_year_investment(current_investment,yearsPayments,investment_yeild);
+              investmentAfterYield = current_investment;
+              investmentAfterDiv = investmentAfterYield;
+              divReturned = eval(calculate_yearly_div(current_investment,dividend_yeild));
+              if (reinvest_dividend)
+              {
+                  
+                  current_investment = eval(current_investment)+divReturned;
+                  investmentAfterDiv = current_investment;
+              }
+              /*
+                Below is the table row structure
+                <tr>
+                  <th scope="row" >1</th>
+                  <td>$10000</td><td>$200</td><td>$2400</td><td>$12400</td><td>$16800</td><td>$160</td><td>$16960</td>
+                </tr>
+              */
+              var newTableRow = document.createElement("tr");
+              var newRowHeader = document.createElement("th");
+              newRowHeader.scope = "row";
+              newRowHeader.innerText = eval(year)+1;
+              newTableRow.appendChild(newRowHeader);
+
+              var newRowData0_Principle = document.createElement("td");
+              newRowData0_Principle.innerText = eval(parseFloat(currentYearsPrinciple).toFixed(2));
+              var newRowData1_MoCredit = document.createElement("td");
+              newRowData1_MoCredit.innerText = eval(parseFloat(current_mo_payment).toFixed(2));
+              var newRowData2_TotalCredit = document.createElement("td");
+              newRowData2_TotalCredit.innerText = eval(parseFloat(yearsPayments).toFixed(2));
+              var newRowData3_BeforeYield = document.createElement("td");
+              newRowData3_BeforeYield.innerText = eval(parseFloat(currentYearsPrinciple+yearsPayments).toFixed(2));
+              var newRowData4_AfterYeild = document.createElement("td");
+              newRowData4_AfterYeild.innerText = eval(parseFloat(investmentAfterYield).toFixed(2));
+              var newRowData5_DivReturned = document.createElement("td");
+              newRowData5_DivReturned.innerText = eval(parseFloat(divReturned).toFixed(2));
+              var newRowData6_InvestDiv = document.createElement("td");
+              newRowData6_InvestDiv.innerText = eval(parseFloat(investmentAfterDiv)).toFixed(2);
+              newTableRow.appendChild(newRowData0_Principle);
+              newTableRow.appendChild(newRowData1_MoCredit);
+              newTableRow.appendChild(newRowData2_TotalCredit);
+              newTableRow.appendChild(newRowData3_BeforeYield);
+              newTableRow.appendChild(newRowData4_AfterYeild);
+              newTableRow.appendChild(newRowData5_DivReturned);
+              newTableRow.appendChild(newRowData6_InvestDiv);
+              
+              document.getElementById("tbody").appendChild(newTableRow);
+              console.log("[ "+year+" ] After Yeild added: "+current_investment);
+              //console.log("Year "+year+": $"+current_mo_payment);
+            }
+            message = "Investment period of: "+period+" Years"+
+              " Initial Investment: $"+start_amount+
+            " Monthly Payments of: $"+monthly_payment+
+              " Payment Increase rate: "+monthly_payment_increase+"% PA"+
+              "Inflation rate of: "+inflation_rate+"%\n"+
+              "First Years Total Payments: $"+first_years_total_monthly_payments+
+                "\nSecond Years Total Payments: $"+second_years_total_monthly_payments+
+              "\nTotal Credit Payments: $"+total_Credit_Payments+
+              "\nYour Investment is worth: $"+current_investment;
+            //alert(message);
+          });
+          var resetBtn = document.getElementById("reset");
+          resetBtn.addEventListener("click", function()
+          { 
+            document.getElementById("tablewrapper").style.visibility = "hidden";
+            resetTable();
+            document.getElementById("startAge").value = 21;
+            document.getElementById("endAge").value = 65;
+            document.getElementById("startAmount").value = 5000;
+            document.getElementById("startPaymentAmount").value = 200;
+            document.getElementById("monthlyPaymentIncreasePa").value = 0.00;
+            document.getElementById("inflationRate").value = 3.00;
+            console.log(eval(start_age.value)+","+eval(end_age.value));
+          });
+          var csvBtn = document.getElementById("csvfile");
+          csvBtn.addEventListener("click", function ()
+          {
+            if (document.getElementById("tablewrapper").style.visibility == "hidden"){
+              // Do nothing (Make sure button is already greyed out!)
+              //alert("Test");
+            }
+            else {
+              //Download the table to csv format.   
+              var html = document.querySelector("table").outerHTML;
+              console.log("CSV Button pressed!");
+	            export_table_to_csv(html, "table.csv");   
+            }
+          });
+        }
+        window.onload=init();
+      </script>
+  </body>
+</html>
