@@ -1,4 +1,4 @@
-function download_csv(csv, filename) {
+export function download_csv(csv, filename) {
     var csvFile;
     var downloadLink;
 
@@ -24,7 +24,7 @@ function download_csv(csv, filename) {
     downloadLink.click();
 }
 
-function export_table_to_csv(html, filename) {
+export function export_table_to_csv(html, filename) {
 	var csv = [];
 	var rows = document.querySelectorAll("table tr");
 	

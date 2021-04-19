@@ -1,5 +1,5 @@
 
-function duration(startAge, endAge) {
+export function duration(startAge, endAge) {
   //  Check for undefined values, and pass in defaults
   startAge = typeof startAge !== 'undefined' ? startAge : 21;
   endAge = typeof endAge !== 'undefined' ? endAge : 65;
@@ -7,13 +7,13 @@ function duration(startAge, endAge) {
   return endAge - startAge;
 };
 
-function inflation(inflationRate) {
+export function inflation(inflationRate) {
   // Check for undefined and return inflation rate
   inflationRate = typeof inflationRate !== 'undefined' ? inflationRate : 3.00;
   return inflationRate;
 };
 
-function calulateNextYearsPayment(currentPaymentAmount, paymentMaxAmount, increasePA_Rate) {
+export function calulateNextYearsPayment(currentPaymentAmount, paymentMaxAmount, increasePA_Rate) {
   currentPaymentAmount = typeof currentPaymentAmount !== 'undefined' ? currentPaymentAmount : 5000;
   paymentMaxAmount = typeof paymentMaxAmount !== 'undefined' ? paymentMaxAmount : 1000;
   increasePA_Rate = typeof increasePA_Rate !== 'undefined' ? increasePA_Rate : 0.00; // This means flat, Every year is the same monthly rate 
@@ -24,7 +24,7 @@ function calulateNextYearsPayment(currentPaymentAmount, paymentMaxAmount, increa
     }
   }
 
-  nextYearsMoPayment = currentPaymentAmount * (1 + increasePA_Rate)
+  let nextYearsMoPayment = currentPaymentAmount * (1 + increasePA_Rate)
   if (nextYearsMoPayment >= paymentMaxAmount) {
     return paymentMaxAmount;
   }
@@ -33,9 +33,10 @@ function calulateNextYearsPayment(currentPaymentAmount, paymentMaxAmount, increa
   }
 };
 
-function calculateYearsCreditPayments(paymentStartAmount = 200, paymentMaxAmount = 1000, increasePA_Rate = 0.00) {
+export function calculateYearsCreditPayments(paymentStartAmount = 200, paymentMaxAmount = 1000, increasePA_Rate = 0.00) {
   // This means flat, Every year is the same monthly rate 
   // Calculate the years total payments.
+  let totalCredit;
   if (increasePA_Rate == "undefined") {
     increasePA_Rate = 0.00;
   }
@@ -60,12 +61,12 @@ function calculateYearsCreditPayments(paymentStartAmount = 200, paymentMaxAmount
   return totalCredit;
 };
 
-function calculate_monthly_payment(paymentStartAmount = 200, paymentMaxAmount = 1000, increasePA_Rate = 0.00) {
+export function calculate_monthly_payment(paymentStartAmount = 200, paymentMaxAmount = 1000, increasePA_Rate = 0.00) {
   if (increasePA_Rate == "0.00") {
     return paymentStartAmount;
   }
-  calculated_ammount = paymentStartAmount * (1 + (increasePA_Rate / 100.00));
-  console.log("[" + increasePA_Rate + "] Mo Amount: " + (1 + (increasePA_Rate / 100.00)));
+  let calculated_ammount = paymentStartAmount * (1 + (increasePA_Rate / paymentStartAmount));
+  console.log("[" + increasePA_Rate + "] Mo Amount: " + (1 + (increasePA_Rate / paymentStartAmount)));
   if (calculated_ammount > paymentMaxAmount) {
     calculated_ammount = paymentMaxAmount;
 
@@ -74,22 +75,22 @@ function calculate_monthly_payment(paymentStartAmount = 200, paymentMaxAmount = 
 }
 
 
-function calculate_year_investment(currentInvestment, currentYearPayment, investmentYield = 8.00) {
-  increase_amount = (1 + (investmentYield / 100.00));
+export function calculate_year_investment(currentInvestment, currentYearPayment, investmentYield = 8.00) {
+  let increase_amount = (1 + (investmentYield / 100.00));
 
-  end_amount = eval((eval(currentInvestment) + eval(currentYearPayment)) * increase_amount);
+  let end_amount = eval((eval(currentInvestment) + eval(currentYearPayment)) * increase_amount);
   console.log("Yeild Calc: inv [" + currentInvestment + "] + [" + currentYearPayment + "] x" + increase_amount + " = $" + end_amount);
   return end_amount;
 }
 
-function calculate_yearly_div(currentInvestment, dividendRate) {
-  div_year = eval(currentInvestment) * eval(dividendRate / 100);
+export function calculate_yearly_div(currentInvestment, dividendRate) {
+  let div_year = eval(currentInvestment) * eval(dividendRate / 100);
   console.log("Potential year div: " + div_year);
   return div_year;
 }
 
-function calculate_monthly_div(currentInvestment, dividendRate) {
-  mo_div = eval(calculate_yearly_div(currentInvestment, dividendRate) / 12);
+export function calculate_monthly_div(currentInvestment, dividendRate) {
+  let mo_div = eval(calculate_yearly_div(currentInvestment, dividendRate) / 12);
   console.log("Monthly div is: " + mo_div);
   return mo_div;
 }
