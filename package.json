@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitea.prod.lab:wikiadmin/investorapp.git"
+    "url": "git@gitea.prod.lab:gitmaster/investorapp.git"
   },
   "author": "",
   "license": "ISC",
