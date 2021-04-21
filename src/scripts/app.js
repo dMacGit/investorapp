@@ -2,6 +2,7 @@ import bb, {line} from 'billboard.js';
 import {duration, inflation, calulateNextYearsPayment,calculateYearsCreditPayments, calculate_monthly_payment,calculate_year_investment, calculate_yearly_div, calculate_monthly_div} from './calculate';
 import {resetTable,generateRow,generateTable} from './spreadsheet';
 import {download_csv,export_table_to_csv} from './csv';
+import '../styles/style.css';
 
 
 
@@ -356,4 +357,11 @@ function init() {
     }
   });
 }
+
+if (process.env.NODE_ENV !== 'production') {
+
+  console.log('Looks like we are in development mode!');
+
+}
+
 window.onload = init();
