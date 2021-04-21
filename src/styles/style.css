@@ -222,7 +222,7 @@ header {
 .theme-wrapper{
   display: flex;
   flex-direction: row;
-  justify-content: right;
+  justify-content: flex-end;
   margin: 0 auto;
   width: var(--component-max-width);
   height: 35px;
