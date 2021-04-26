@@ -41,4 +41,4 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
           args: deploy --dir=dist --prod
-          secrets: [ secrets.GITHUB_TOKEN , secrets.NETLIFY_SITE_ID ]
+          secrets: '[ secrets.GITHUB_TOKEN , secrets.NETLIFY_SITE_ID ]'
