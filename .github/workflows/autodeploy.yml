@@ -40,4 +40,4 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          args: deploy $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --message='Publishing App' --dir=dist --prod
+          args: deploy ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.GITHUB_TOKEN }} --message='Publishing App' --dir=dist --prod
