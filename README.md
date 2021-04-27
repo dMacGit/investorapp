@@ -2,7 +2,8 @@
 
 _Investorapp is a Simple Web Application that calculates and shows a breakdown of investing over time_
 
-![Branch Build](https://github.com/dMacGit/investorapp/actions/workflows/autodeploy.yml/badge.svg?branch=main)
+![Branch Build](https://github.com/dMacGit/investorapp/actions/workflows/autodeploy.yml/badge.svg?branch=main) 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e155f476-8dd9-4e77-83b2-6639c05494e1/deploy-status)](https://app.netlify.com/sites/wizardly-gates-61c9c9/deploys)
 
 **See live site-demo:** [investor.dmcindoe.app](https://investor.dmcindoe.app)
 
