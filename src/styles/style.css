@@ -173,14 +173,43 @@ body {
   border-radius: 5px;
 }
 
-.bb-axis .domain {
-  stroke: var(--primary-color);
 
+/* Graph base axis lines */
+.domain {
+  stroke: var(--primary-color);
 }
 
-/* .bb  */
-.bb {
+
+
+.bb-axis-x {
+  stroke: none;   
+  fill: none;  
+} 
+
+.bb-axis-y {
+  stroke: none;   
+  fill: none;  
+} 
+
+.tick text {
   fill: var(--primary-color);
+/*   stroke: black; */
+}
+.tick line {
+ stroke: var(--primary-color);
+}
+
+
+.bb-grid {
+  stroke: var(--primary-color); 
+  stroke-dasharray: 3;
+}
+
+/*
+  Make sure lines are filled between curve ends
+*/
+.bb-chart-lines {
+  fill: none;
 }
 
 .bb-chart- {
@@ -191,6 +220,15 @@ body {
   fill: var(--primary-color);
 }
 
+.bb-tooltip {
+  background-color: var(--tooltip-background-color);
+  color: var(--primary-color);
+  border-radius: 5px;  
+}
+
+.bb-tooltip td {
+  padding: 0 .5em 0 .5em;
+}
 
 header {
   width: var(--component-max-width);

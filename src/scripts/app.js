@@ -34,6 +34,15 @@ function toggleTheme(e){
   }
 }
 
+/*
+  Formats data number to comma (,) seperated thousand readable
+*/
+function makeHumanReadable(amount) {
+  return parseFloat(amount).toLocaleString("en-NZ", {
+    maximumFractionDigits: 0,
+  });
+}
+
 function generateChart() {
   y2axisMaxRange = parseInt(dividendArray[dividendArray.length - 1]);
   y1axisMaxRange = parseInt(principleArray[principleArray.length - 1]) * 1.1;
@@ -83,6 +92,17 @@ function generateChart() {
               min: 0,
             }*/,
     },
+    tooltip: {
+      show: true,
+      format: {
+          title: function(d) { return "Year "+d; },
+          value: function(value,ratio,id) {
+              return "$"+makeHumanReadable(value);
+          },
+      }
+
+      
+  },
   });
 }
 
@@ -91,11 +111,7 @@ function resetGraphArray() {
   dividendArray = ["Dividend"];
 }
 
-function formatForTable(amount) {
-  return parseFloat(amount).toLocaleString("en-NZ", {
-    maximumFractionDigits: 0,
-  });
-}
+
 
 function init() {
   currentTheme = localStorage.getItem("theme");
@@ -266,21 +282,21 @@ function init() {
       newTableRow.appendChild(newRowHeader);
 
       var newRowData0_Principle = document.createElement("td");
-      newRowData0_Principle.innerText = formatForTable(currentYearsPrinciple);
+      newRowData0_Principle.innerText = makeHumanReadable(currentYearsPrinciple);
       var newRowData1_MoCredit = document.createElement("td");
-      newRowData1_MoCredit.innerText = formatForTable(current_mo_payment);
+      newRowData1_MoCredit.innerText = makeHumanReadable(current_mo_payment);
       var newRowData2_TotalCredit = document.createElement("td");
-      newRowData2_TotalCredit.innerText = formatForTable(yearsPayments);
+      newRowData2_TotalCredit.innerText = makeHumanReadable(yearsPayments);
       var newRowData3_BeforeYield = document.createElement("td");
       let sumYearsPrinciple =
         parseFloat(currentYearsPrinciple) + parseFloat(yearsPayments);
-      newRowData3_BeforeYield.innerText = formatForTable(sumYearsPrinciple);
+      newRowData3_BeforeYield.innerText = makeHumanReadable(sumYearsPrinciple);
       var newRowData4_Afteryield = document.createElement("td");
-      newRowData4_Afteryield.innerText = formatForTable(investmentAfterYield);
+      newRowData4_Afteryield.innerText = makeHumanReadable(investmentAfterYield);
       var newRowData5_DivReturned = document.createElement("td");
-      newRowData5_DivReturned.innerText = formatForTable(divReturned);
+      newRowData5_DivReturned.innerText = makeHumanReadable(divReturned);
       var newRowData6_InvestDiv = document.createElement("td");
-      newRowData6_InvestDiv.innerText = formatForTable(investmentAfterDiv);
+      newRowData6_InvestDiv.innerText = makeHumanReadable(investmentAfterDiv);
 
       newTableRow.appendChild(newRowData0_Principle);
       newTableRow.appendChild(newRowData1_MoCredit);
