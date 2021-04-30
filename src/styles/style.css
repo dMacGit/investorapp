@@ -226,7 +226,28 @@ body {
   border-radius: 5px;  
 }
 
-.bb-tooltip td {
+.bb-tooltip-container tbody,
+.bb-tooltip-container td {
+  border: none;
+}
+
+.bb-tooltip-container table {
+  border: 2px solid var(--primary-color);
+  border-radius: 5px;  
+}
+
+.bb-tooltip-container table {
+  background-color: var(--table-background-secondary-color);
+}
+.bb-tooltip-container th {
+  padding: 0 .5em 0 .5em;
+}
+
+.name {
+  padding-right: .5em;
+}
+
+.value {
   padding: 0 .5em 0 .5em;
 }
 

@@ -93,16 +93,21 @@ function generateChart() {
             }*/,
     },
     tooltip: {
-      show: true,
-      format: {
-          title: function(d) { return "Year "+d; },
-          value: function(value,ratio,id) {
-              return "$"+makeHumanReadable(value);
-          },
-      }
+      init: {
+        show: false,
+        
+      },
+      doNotHide: false,
+      contents: {
 
-      
-  },
+        template: "<table><tbody><tr><th colspan='2'>Year {=TITLE}</th></tr>{{<tr><td class=name><span style='background-color:{=COLOR}; width:10px; height:10px; margin:auto; display:inline-block; align-self:center; margin:0 .5em 0 .5em; border-radius:1px;'></span><span>{=NAME}</span></td><td class=value>{=VALUE}<td></td></tr>}}</tbody></table>"
+      },
+      format: {
+        value: function(value,ratio,id) {
+            return "$"+makeHumanReadable(value);
+        }
+      }
+    },
   });
 }
 
