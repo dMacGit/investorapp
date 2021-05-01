@@ -1,22 +1,21 @@
 import * as calc from './calculate';
 import * as graphing from './graphing';
-import {makeHumanReadable} from './utils';
 import {resetTable,generateRow,generateTable} from './spreadsheet';
 import {download_csv,export_table_to_csv} from './csv';
 import '../styles/style.css';
 
-
-
 let isFormVisible = true;
 let chart = null;
-let principleArray = ["Principle"];
-let dividendArray = ["Dividend"];
-let y2axisMaxRange = 0;
-let y1axisMaxRange = 0;
+global.principleArray = ["Principle"];
+global.dividendArray = ["Dividend"];
 let check = false;
 let currentTheme = null;
 let darkMode = false;
 
+
+/*
+/*  Handle toggling of site theme. Light/Dark mode
+*/
 function toggleTheme(e){
   var checked = e.target.checked;
   console.log("User pressed toggle");
@@ -35,8 +34,9 @@ function toggleTheme(e){
   }
 }
 
-
-
+/*
+/*  Resets Graph data and backing Arrays  
+*/
 function resetGraphArray() {
   principleArray = ["Principle"];
   dividendArray = ["Dividend"];
@@ -44,42 +44,38 @@ function resetGraphArray() {
 }
 
 /*
-/*  Setting up 
+/*  Setting up Investment properties, Graph and Table
 */
 
 function init() {
+  //Pre-select user theme from local browser storage
   currentTheme = localStorage.getItem("theme");
-  //const [darkMode, toggleDarkMode] = useState(false);
-  //const [forceRender, setForceRender] = useState(false);
-  
-
 
   if (currentTheme === null) {
     console.log("No theme saved: defaulting to Dark " + darkMode);
-  } else {
-    console.log(currentTheme);
+  } else {    
     darkMode = true;
-    //toggleDarkMode(true);
     console.log("Saved theme found: defaulting to Dark " + darkMode);
   }
 
+  //Initilize page based on theme
   if (darkMode) {
     document.documentElement.setAttribute("data-theme", "dark");
     check = true;
     console.log(check);
   }
 
+  //Theme toggle button evenet listener
   var darkSlider = document.getElementById("checkbox");
   darkSlider.checked = darkMode;
   darkSlider.addEventListener("click", function (event) {
     toggleTheme(event);
   });
 
-  var hideBtn = document.getElementById("hideMain");
-
   /*
     Hide or Show Investment Properties Panel
   */
+  var hideBtn = document.getElementById("hideMain");
   hideBtn.addEventListener("click", function () {
     if (!isFormVisible) {
       document.getElementById("form-wrapper").style.display = "flex";
@@ -98,134 +94,27 @@ function init() {
   var calcBtn = document.getElementById("calculate");
   calcBtn.addEventListener("click", function () {
     if (document.getElementById("tablewrapper").style.visibility == "visible") {
-      //Just remove and re-add.
+      //If graph & table visible remove and re-add to simulate a reset/recalculate
       resetTable();
       resetGraphArray();
     }
+    //Calculate Investment
     document.getElementById("tablewrapper").style.visibility = "visible";
-    let start_age = document.getElementById("startAge").value;
-    let end_age = document.getElementById("endAge").value;
-    let start_amount = document.getElementById("startAmount").value;
-    let investment_yield = document.getElementById("yield").value;
-    let monthly_payment = document.getElementById("startPaymentAmount").value;
-    let monthly_payment_increase = document.getElementById(
-      "monthlyPaymentIncreasePa"
-    ).value;
-    console.log("monthly_payment_increase: ", +monthly_payment_increase);
-    console.log(
-      "monthlyPaymentMax: ",
-      +document.getElementById("monthlyPaymentMax")
-    );
-    let monthly_payment_max_cap = document.getElementById("monthlyPaymentMax").value;
-    let inflation_rate = document.getElementById("inflationRate").value;
-    let dividend_yield = document.getElementById("dividendRate").value;
-    let reinvest_dividend = document.getElementById("divReinvest").checked;
-    let period = calc.duration(start_age, end_age);
-    console.log(start_age.value + "," + end_age.value);
-    let total_Credit_Payments = 0.0;
-    let current_mo_payment = monthly_payment;
-    let current_investment = start_amount;
-    let investmentAfterYield = 0;
-    let divReturned = 0;
-    let investmentAfterDiv = 0;
-    var currentYearsPrinciple = 0;
-    console.log("=============================== New run ===================");
+    calc.calculateInvestment();
 
-    for (let year = 0; year < period; year++) {
-      currentYearsPrinciple = current_investment;
-      if (year == 0) {
-        console.debug(
-          "[ " +
-            year +
-            " ] Before mo payment calc: " +
-            current_mo_payment +
-            "{ " +
-            monthly_payment_increase +
-            " }"
-        );
-        current_mo_payment = calc.calculate_monthly_payment(
-          current_mo_payment,
-          monthly_payment_max_cap,
-          undefined
-        );
-        console.debug("After mo payment calc: " + current_mo_payment);
-      } else {
-        console.debug(
-          "[ " +
-            year +
-            " ] Before mo payment calc: " +
-            current_mo_payment +
-            "{ " +
-            monthly_payment_increase +
-            " }"
-        );
-
-        current_mo_payment = calc.calculate_monthly_payment(
-          current_mo_payment,
-          monthly_payment_max_cap,
-          monthly_payment_increase
-        );
-
-        console.debug("After mo payment calc: " + current_mo_payment);
-      }
-      var yearsPayments = calc.calculateYearsCreditPayments(
-        current_mo_payment,
-        monthly_payment_max_cap,
-        undefined
-      );
-      total_Credit_Payments += yearsPayments;
-
-      console.debug(
-        "[ " +
-          year +
-          " ] Before Inv yield added: " +
-          current_investment +
-          " year in payments credit: " +
-          yearsPayments
-      );
-      current_investment = calc.calculate_year_investment(
-        current_investment,
-        yearsPayments,
-        investment_yield
-      );
-      investmentAfterYield = current_investment;
-      investmentAfterDiv = investmentAfterYield;
-      divReturned = eval(
-        calc.calculate_yearly_div(current_investment, dividend_yield)
-      );
-      if (reinvest_dividend) {
-        current_investment = eval(current_investment) + divReturned;
-        investmentAfterDiv = current_investment;
-      }
-      
-      let newInvestmentPeriod = {
-        currentYearsPrinciple: currentYearsPrinciple,
-        current_mo_payment: current_mo_payment,
-        yearsPayments: yearsPayments,
-        sumYearsPrinciple: parseFloat(currentYearsPrinciple) + parseFloat(yearsPayments),
-        investmentAfterYield: investmentAfterYield,
-        divReturned: divReturned,
-        investmentAfterDiv: investmentAfterDiv,
-        year: year
-      };
-
-      generateRow(newInvestmentPeriod);
-      document.getElementById("dynamic").appendChild(generateRow(newInvestmentPeriod));
-      
-      console.debug(
-        "[ " + year + " ] After yield added: " + current_investment
-      );
-      principleArray.push(parseInt(currentYearsPrinciple));
-      dividendArray.push(parseInt(divReturned));
-    }
+    //Generate new graph or update existing
     if (chart === null) {
       chart = graphing.generateChart(dividendArray, principleArray);
     } else {
+      //Easier to just destroy and re-create new Graph instead of update
       chart.destroy();
       chart = graphing.generateChart(dividendArray, principleArray);
     }
   });
   
+  /*
+  /*  Handle Reset button, reset Grapch/Table and Investment properties to default
+  */
   var resetBtn = document.getElementById("reset");
   resetBtn.addEventListener("click", function () {
     document.getElementById("tablewrapper").style.visibility = "hidden";
