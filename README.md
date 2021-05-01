@@ -47,8 +47,8 @@ To setup/install the project once cloned simply run the below commands in the cl
 
 ## Future Improvments
 
-- Tweak mobile style
-- Continue to offload calc & spreadsheet app.js logic to other respective scripts.
+- ~~Responsive design, Web & Mobile~~
+- ~~Continue to offload calc & spreadsheet app.js logic to other respective scripts.~~
 - Cody Tidyup & Comments
 
 ## Status
