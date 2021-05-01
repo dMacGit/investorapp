@@ -1,7 +1,7 @@
-import * as calc from './calculate';
-import * as graphing from './graphing';
-import {resetTable,generateRow,generateTable} from './spreadsheet';
-import {download_csv,export_table_to_csv} from './csv';
+import {calculateInvestment} from './calculate';
+import {generateChart} from './graphing';
+import {resetTable} from './spreadsheet';
+import {export_table_to_csv} from './csv';
 import '../styles/style.css';
 
 let isFormVisible = true;
@@ -100,15 +100,15 @@ function init() {
     }
     //Calculate Investment
     document.getElementById("tablewrapper").style.visibility = "visible";
-    calc.calculateInvestment();
+    calculateInvestment();
 
     //Generate new graph or update existing
     if (chart === null) {
-      chart = graphing.generateChart(dividendArray, principleArray);
+      chart = generateChart(dividendArray, principleArray);
     } else {
       //Easier to just destroy and re-create new Graph instead of update
       chart.destroy();
-      chart = graphing.generateChart(dividendArray, principleArray);
+      chart = generateChart(dividendArray, principleArray);
     }
   });
   
