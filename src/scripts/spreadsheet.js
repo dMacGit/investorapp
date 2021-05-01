@@ -1,4 +1,5 @@
 import {makeHumanReadable} from './utils'
+
 export function generateRow(rowData) {
   //Format data and create row.
   //Return the String.
