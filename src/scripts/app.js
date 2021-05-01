@@ -197,12 +197,7 @@ function init() {
         current_investment = eval(current_investment) + divReturned;
         investmentAfterDiv = current_investment;
       }
-      // var newTableRow = document.createElement("tr");
-      // var newRowHeader = document.createElement("th");
-      // newRowHeader.scope = "row";
-      // newRowHeader.innerText = eval(year) + 1;
-      // newTableRow.appendChild(newRowHeader);
-
+      
       let newInvestmentPeriod = {
         currentYearsPrinciple: currentYearsPrinciple,
         current_mo_payment: current_mo_payment,
@@ -215,32 +210,6 @@ function init() {
       };
 
       generateRow(newInvestmentPeriod);
-      // var newRowData0_Principle = document.createElement("td");
-      // newRowData0_Principle.innerText = makeHumanReadable(currentYearsPrinciple);
-      // var newRowData1_MoCredit = document.createElement("td");
-      // newRowData1_MoCredit.innerText = makeHumanReadable(current_mo_payment);
-      // var newRowData2_TotalCredit = document.createElement("td");
-      // newRowData2_TotalCredit.innerText = makeHumanReadable(yearsPayments);
-      // var newRowData3_BeforeYield = document.createElement("td");
-      // let sumYearsPrinciple =
-      //   parseFloat(currentYearsPrinciple) + parseFloat(yearsPayments);
-      // newRowData3_BeforeYield.innerText = makeHumanReadable(sumYearsPrinciple);
-      // var newRowData4_Afteryield = document.createElement("td");
-      // newRowData4_Afteryield.innerText = makeHumanReadable(investmentAfterYield);
-      // var newRowData5_DivReturned = document.createElement("td");
-      // newRowData5_DivReturned.innerText = makeHumanReadable(divReturned);
-      // var newRowData6_InvestDiv = document.createElement("td");
-      // newRowData6_InvestDiv.innerText = makeHumanReadable(investmentAfterDiv);
-
-      // newTableRow.appendChild(newRowData0_Principle);
-      // newTableRow.appendChild(newRowData1_MoCredit);
-      // newTableRow.appendChild(newRowData2_TotalCredit);
-      // newTableRow.appendChild(newRowData3_BeforeYield);
-      // newTableRow.appendChild(newRowData4_Afteryield);
-      // newTableRow.appendChild(newRowData5_DivReturned);
-      // newTableRow.appendChild(newRowData6_InvestDiv);
-
-      // document.getElementById("dynamic").appendChild(newTableRow);
       document.getElementById("dynamic").appendChild(generateRow(newInvestmentPeriod));
       
       console.debug(
