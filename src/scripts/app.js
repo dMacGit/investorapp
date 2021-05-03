@@ -8,6 +8,7 @@ let isFormVisible = true;
 let chart = null;
 global.principleArray = ["Principle"];
 global.dividendArray = ["Dividend"];
+global.investmentArray = [];
 let check = false;
 let currentTheme = null;
 let darkMode = false;
@@ -97,6 +98,7 @@ function init() {
       //If graph & table visible remove and re-add to simulate a reset/recalculate
       resetTable();
       resetGraphArray();
+      investmentArray = [];
     }
     //Calculate Investment
     document.getElementById("tablewrapper").style.visibility = "visible";
@@ -120,6 +122,7 @@ function init() {
     document.getElementById("tablewrapper").style.visibility = "hidden";
     resetGraphArray();
     resetTable();
+    investmentArray = [];
     document.getElementById("divReinvest").checked = false;
     document.getElementById("startAge").value = 21;
     document.getElementById("endAge").value = 65;

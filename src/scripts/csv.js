@@ -26,13 +26,14 @@ export function download_csv(csv, filename) {
 
 export function export_table_to_csv(html, filename) {
 	var csv = [];
-	var rows = document.querySelectorAll("table tr");
+	var table = document.getElementById("tablewrapper");
+    var rows = table.querySelectorAll("tr");
 	
     for (var i = 0; i < rows.length; i++) {
 		var row = [], cols = rows[i].querySelectorAll("td, th");
 		
         for (var j = 0; j < cols.length; j++) 
-            row.push(cols[j].innerText);
+            row.push((cols[j].innerText).replaceAll(',',''));
         
 		csv.push(row.join(","));		
 	}

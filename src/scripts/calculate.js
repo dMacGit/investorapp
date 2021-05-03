@@ -238,6 +238,7 @@ export function calculateInvestment() {
       investmentAfterDiv: investmentAfterDiv,
       year: year,
     };
+    investmentArray.push(newInvestmentPeriod);
     generateRow(newInvestmentPeriod);
     document
       .getElementById("dynamic")
