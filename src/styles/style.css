@@ -100,6 +100,7 @@
   --toggle-dark-icon-bg-color: hsl(123, 38%, 35%);
   --toggle-light-icon: "\f185";
   --toggle-dark-icon: "\f186";
+  --github-icon: "\f09b";
   
 
   /*Slider transition & position values*/
@@ -150,8 +151,75 @@ body {
   --top-wrapper-color: var(--dark-top-wrapper-color);
 }
 
+nav {
+  background-color: var(--top-wrapper-color);
+}
+
+.top-wrapper {
+  
+  width: var(--component-max-width);
+  margin: 0 auto;
+  height: auto;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.socials-Wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  height: 35px;
+  width: 50%;
+}
+.socials {
+  margin-left: 1em;
+  align-self: center;
+  color: var(--primary-color);
+  
+}
+
+.fa-github {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+.a {
+  color: var(--primary-color);
+  text-decoration: none;
+  /* font-family: "Train One"; */
+  font-size: 1.4rem;
+  transition: transform 0.1s ease;
+}
+
+.a:link {
+  direction: none;
+}
+
+.socials:hover {
+  transform: scale(1.2);
+}
 
 
+
+.theme-wrapper{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  /* margin: 0 auto; */
+  /*  */
+  width: 50%;
+  height: 35px;
+
+}
+.theme-wrapper p {
+  margin: 0;
+  align-self: center;
+}
+
+.toggle-container {
+  margin-left: 5px;
+}
 
 
 /*****************/
@@ -272,29 +340,7 @@ header {
 }
 
 
-.top-wrapper {
-  background-color: var(--top-wrapper-color);
-  width: 100vw;
-  height: auto;
-}
 
-.theme-wrapper{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin: 0 auto;
-  width: var(--component-max-width);
-  height: 35px;
-
-}
-.theme-wrapper p {
-  margin: 0;
-  align-self: center;
-}
-
-.toggle-container {
-  margin-left: 5px;
-}
 
 /*
 .labels {
