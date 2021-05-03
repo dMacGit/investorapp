@@ -151,8 +151,12 @@ body {
   --top-wrapper-color: var(--dark-top-wrapper-color);
 }
 
-.top-wrapper {
+nav {
   background-color: var(--top-wrapper-color);
+}
+
+.top-wrapper {
+  
   width: var(--component-max-width);
   margin: 0 auto;
   height: auto;
