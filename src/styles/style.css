@@ -80,7 +80,9 @@
   --dark-table-background-secondary-color: hsl(0,0%,20%);
 
   --button-background-color: hsl(123, 38%, 57%);
-  --dark-button-background-color: hsl(123, 38%, 35%);
+  --dark-button-background-color: hsla(123, 38%, 35%,1);
+  --button-dissabled-background-color: hsla(123, 38%, 35%,1);
+  --dark-dissabled-button-background-color: hsla(123, 38%, 20%, 1);
 
   --primary-color: black;
 
@@ -145,6 +147,7 @@ body {
   --tooltip-background-color: var(--primary-color);
   --tooltip-font-color: black;
   --button-background-color: var(--dark-button-background-color);
+  --button-dissabled-background-color: var(--dark-dissabled-button-background-color);
   --table-header-text-color: var(--primary-color);
   --table-background-primary-color: var(--dark-table-background-primary-color);
   --table-background-secondary-color: var(--dark-table-background-secondary-color);
