@@ -40,7 +40,7 @@ export function calulateNextYearsPayment(
   }
 }
 
-function calculateYearsCreditPayments(
+export function calculateYearsCreditPayments(
   paymentStartAmount = 200,
   paymentMaxAmount = 1000,
   increasePA_Rate = 0.0
@@ -73,7 +73,7 @@ function calculateYearsCreditPayments(
   return totalCredit;
 }
 
-function calculate_monthly_payment(
+export function calculate_monthly_payment(
   paymentStartAmount = 200,
   paymentMaxAmount = 1000,
   increasePA_Rate = 0.0
@@ -95,7 +95,7 @@ function calculate_monthly_payment(
   return calculated_ammount;
 }
 
-function calculate_year_investment(
+export function calculate_year_investment(
   currentInvestment,
   currentYearPayment,
   investmentYield = 8.0
@@ -118,19 +118,19 @@ function calculate_year_investment(
   return end_amount;
 }
 
-function calculate_yearly_div(currentInvestment, dividendRate) {
+export function calculate_yearly_div(currentInvestment, dividendRate) {
   let div_year = eval(currentInvestment) * eval(dividendRate / 100);
   console.log("Potential year div: " + div_year);
   return div_year;
 }
 
-function calculate_monthly_div(currentInvestment, dividendRate) {
+export function calculate_monthly_div(currentInvestment, dividendRate) {
   let mo_div = eval(calculate_yearly_div(currentInvestment, dividendRate) / 12);
   console.log("Monthly div is: " + mo_div);
   return mo_div;
 }
 
-export function calculateInvestment(generateGraph) {
+export function calculateInvestment() {
   let start_age = document.getElementById("startAge").value;
   let end_age = document.getElementById("endAge").value;
   let start_amount = document.getElementById("startAmount").value;
@@ -239,12 +239,11 @@ export function calculateInvestment(generateGraph) {
       year: year,
     };
     investmentArray.push(newInvestmentPeriod);
+    generateRow(newInvestmentPeriod);
+    document
+      .getElementById("dynamic")
+      .appendChild(generateRow(newInvestmentPeriod));
 
-    // Draw graph only if Boolean generateGraph is true
-    if (generateGraph){
-      generateRow(newInvestmentPeriod);
-      document.getElementById("dynamic").appendChild(generateRow(newInvestmentPeriod));
-    }
     console.debug("[ " + year + " ] After yield added: " + current_investment);
     principleArray.push(parseInt(currentYearsPrinciple));
     dividendArray.push(parseInt(divReturned));
